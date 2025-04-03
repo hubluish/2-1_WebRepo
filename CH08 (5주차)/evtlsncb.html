@@ -1,0 +1,17 @@
+<html>
+    <head></head>
+    <body>
+        <button id = 'order1'>주문1</button>
+        <button id = 'order2'>주문2</button>
+        <script>
+            const orderHandler1 = function() {
+                alert('주문하신 아메리카노 나왔습니다~.~');
+            };
+            const orderHandler2 = function() {
+                alert('주문하신 카페라떼 나왔습니다 >.<');
+            };
+            order1.onclick = orderHandler1;
+            order2.addEventListener('click', orderHandler2);
+        </script>
+    </body>
+</html>
