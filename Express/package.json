@@ -10,7 +10,7 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "mongodb": "^6.15.0",
+    "mongodb": "^6.16.0",
     "node-mysql": "^0.4.2"
   }
 }
