@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mongodb": "^6.16.0",
+    "node-mysql": "^0.4.2"
+  }
+}
