@@ -22,18 +22,16 @@ MongoClient.connect(url)
       res.sendFile(path.join(__dirname, 'enter.html'));
     });
 
-    // /list 요청 처리
-    app.get('/list', function(req, res){
-      // conn.query("select * from post", function (err, rows, fields) {
-      //   if (err) throw err;
-      //   console.log(rows);
-      // });
+  app.get('/list', async function (req, res) {
+    const result = await mydb.collection('post').find().toArray();
+    res.render('list.ejs', { data: result });
+  });
 
-      mydb.collection('post').find().toArray(function(err, result){
-        console.log(result);
-      });
-      res.render('list.ejs');
-    });
+
+
+
+
+
 
 
     app.post('/save', function(req, res){
