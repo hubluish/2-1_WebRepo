@@ -60,7 +60,7 @@
             <tr>
               <td><%= data[i].title %></td>
               <td><%= data[i].date %></td>
-              <td><button class="delete btn-outline-danger">삭제</button></td>
+              <td><button>삭제</button></td>
             </tr>
           <% } %>
         </tbody>
@@ -69,19 +69,5 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-    <script>
-  $('.delete').click(function(e) {
-    // 클래스명이 delete인 엘리먼트를 클릭하면 실행됨
-    $.ajax({
-      type: 'post',
-      url: '/delete',
-      data: { _id: '63d0dbc611f14a43e55d6070' }
-    }).done(function(result) {
-      // 응답에 성공했을 때
-    }).fail(function(xhr, textStatus, errorThrown) {
-      // 응답에 실패했을 때
-    });
-  });
-</script>
-  </body>
+</body>
 </html>
