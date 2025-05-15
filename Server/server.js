@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb');
 const path = require('path');
-
+const mongoclient = require("mongodb").MongoClient;
+const ObjId = require('mongodb').ObjectId;
 
 app.use(express.urlencoded({ extended: true }));
 const db = require('node-mysql/lib/db');
@@ -48,7 +49,21 @@ MongoClient.connect(url)
     });
 
     res.send('데이터 추가 성공');
-  });
+    });
+
+    app.post("/delete", function (req, res) {
+  console.log(req.body._id);
+  req.body._id = new ObjId(req.body._id);
+  mydb.collection('post').deleteOne(req.body)
+    .then(result => {
+      console.log('삭제완료');
+      res.status(200).send();
+    })
+      .catch(err => {
+        console.log(err);
+        res.status(500).send();
+      });
+    });
 
 
 
