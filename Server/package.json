@@ -6,6 +6,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "mongodb": "^6.16.0",
+    "multer": "^2.0.0",
     "node-mysql": "^0.4.2",
     "objectid": "^3.2.1",
     "sha256": "^0.2.0"
