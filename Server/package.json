@@ -10,5 +10,8 @@
     "node-mysql": "^0.4.2",
     "objectid": "^3.2.1",
     "sha256": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29"
   }
 }

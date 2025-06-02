@@ -22,6 +22,24 @@ const url = 'mongodb+srv://james2048:2055@james2048.3i9tg4t.mongodb.net/?retryWr
 
 let mydb;
 
+    let multer = require('multer');
+
+    let storage = multer.diskStorage({
+      destination: function(req, file, done){
+        done(null, './public/image')
+      },
+      filename: function(req, file, done){
+        done(null, file.originalname)
+      }
+    })
+
+    let upload = multer({storage : storage});
+
+    let imagepath = '';
+
+
+
+
 // MongoDB 연결
 MongoClient.connect(url)
   .then(client => {
@@ -139,7 +157,10 @@ MongoClient.connect(url)
     }
   });
 
-    app
+    app.post('/photo', upload.single('picture'), function(req, res){
+      console.log(req.file.path);
+      imagepath = 'www' + req.file.path;
+    })
 
     app.post("/signup", function (req, res) {
       console.log(req.body.userid);
@@ -171,6 +192,7 @@ MongoClient.connect(url)
           title: req.body.title,
           content: req.body.content,
           date: req.body.someDate,
+          path: imagepath,
         })
         .then((result) => {
           console.log(result);
