@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb');
 const path = require('path');
-const mongoclient = require("mongodb").MongoClient;
 const ObjId = require('mongodb').ObjectId;
 const sha = require('sha256');
 const dotenv = require('dotenv').config();
@@ -11,12 +10,9 @@ const dotenv = require('dotenv').config();
 // body-parser 라이브러리 추가
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use('/', require('./routes/post.js'));
 
-app.use(express.urlencoded({ extended: true }));
-const db = require('node-mysql/lib/db');
 app.set('view engine', 'ejs');
 
 const url = process.env.DB_URL; 
