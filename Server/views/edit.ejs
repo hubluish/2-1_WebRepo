@@ -21,6 +21,13 @@
         <div class="form-group">
         <label>내용</label>
         <textarea name="content" rows="10" class="form-control"><%= data.content %></textarea>
+        
+        <br>
+        <% if (data.path) { %>
+        <img src="<%= data.path %>" width="200">
+        <br>
+        <% } %>
+        
         </div>
         <p></p>
         <div class="form-group">

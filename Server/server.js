@@ -5,20 +5,21 @@ const path = require('path');
 const mongoclient = require("mongodb").MongoClient;
 const ObjId = require('mongodb').ObjectId;
 const sha = require('sha256');
+const dotenv = require('dotenv').config();
+
 
 // body-parser 라이브러리 추가
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
-// 정적 파일 라이브러리 추가
 app.use(express.static("public"));
+app.use('/', require('./routes/post.js'));
 
 app.use(express.urlencoded({ extended: true }));
 const db = require('node-mysql/lib/db');
 app.set('view engine', 'ejs');
 
-const url = 'mongodb+srv://james2048:2055@james2048.3i9tg4t.mongodb.net/?retryWrites=true&w=majority&appName=james2048';
+const url = process.env.DB_URL; 
 
 let mydb;
 
@@ -64,20 +65,25 @@ MongoClient.connect(url)
     .findOne({ _id: req.params.id })
     .then((result) => {
       console.log(result);
+      let imagePath = result.path.replace(/\\public\\image\\/, "/image/");
       res.render("content.ejs", { data: result });
     });
   });
 
-  app.get('/edit/:id', function(req, res){
-  req.params.id = new ObjId(req.params.id);
-  mydb
-    .collection("post")
-    .findOne({ _id: req.params.id })
-    .then((result) => {
-      console.log(result);
-      res.render("edit.ejs", { data: result });
-    });
+  app.get('/edit/:id', function(req, res) {
+    req.params.id = new ObjId(req.params.id);
+    mydb
+      .collection("post")
+      .findOne({ _id: req.params.id })
+      .then((result) => {
+        console.log(result);
+        if (result.path) {
+          result.path = result.path.replace(/\\public\\image\\/, "/image/");
+        }
+        res.render("edit.ejs", { data: result });
+      });
   });
+
 
   let cookieParser = require("cookie-parser");
   
@@ -156,6 +162,22 @@ MongoClient.connect(url)
       res.render("index.ejs", { user: null });
     }
   });
+
+  app.get('/search', function (req, res) {
+    console.log(req.query);
+    mydb.collection("post").find({ title: req.query.value }).toArray()
+      .then((result) => {
+        console.log(result);
+        result = result.map(post => {
+          post.path = post.path.replace(/\\public\\image\\/, "/image/");
+          return post;
+        });
+        res.render("sresult.ejs", { data: result });
+      });
+  });
+
+
+
 
     app.post('/photo', upload.single('picture'), function(req, res){
       console.log(req.file.path);
@@ -244,7 +266,7 @@ MongoClient.connect(url)
 
 
     // 서버 시작
-    app.listen(8080, function () {
+    app.listen(process.env.PORT, function () {
       console.log('포트 8080으로 서버 대기중 ...');
     });
 
